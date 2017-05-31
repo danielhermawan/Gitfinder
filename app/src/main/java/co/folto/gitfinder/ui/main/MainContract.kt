@@ -8,16 +8,18 @@ import co.folto.gitfinder.ui.base.BaseView
  * Created by Daniel on 5/23/2017 for GitFInder project.
  */
 interface MainContract {
-    interface View: BaseView {
+    interface View: BaseView<Presenter> {
         fun setLoading(active: Boolean)
         fun showRepos(repos: List<Repo>)
         fun showError(message: String)
-        fun showNoRepo()
+        fun showNoRepo(isError: Boolean)
         fun goToDetailRepo(id: Long)
+        fun showMoreRepo(repos: List<Repo>)
     }
 
     interface Presenter: BasePresenter {
         fun loadRepos()
+        fun loadMoreRepos(page: Int)
         fun clickRepo(repo: Repo)
     }
 }

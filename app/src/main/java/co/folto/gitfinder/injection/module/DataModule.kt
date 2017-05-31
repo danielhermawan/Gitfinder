@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import io.realm.Realm
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -80,5 +81,9 @@ class DataModule(val baseUrl: String) {
     @Provides
     @Singleton
     fun provideGitService(retrofit: Retrofit): GitService = retrofit.create(GitService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRealm(): Realm = Realm.getDefaultInstance()
 
 }

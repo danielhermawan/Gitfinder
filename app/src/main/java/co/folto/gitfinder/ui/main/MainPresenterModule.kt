@@ -12,5 +12,4 @@ class MainPresenterModule(val view: MainContract.View) {
     @Provides
     fun provideView(): MainContract.View = view
 
-
 }

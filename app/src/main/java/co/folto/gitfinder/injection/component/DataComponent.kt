@@ -10,6 +10,7 @@ import co.folto.gitfinder.injection.ApplicationContext
 import co.folto.gitfinder.injection.module.ApplicationModule
 import co.folto.gitfinder.injection.module.DataModule
 import dagger.Component
+import io.realm.Realm
 import javax.inject.Singleton
 
 /**
@@ -25,4 +26,5 @@ interface DataComponent {
     fun gitService(): GitService
     fun preferenceHelper(): PreferenceHelper
     fun repoRepository(): RepoRepository
+    fun Realm(): Realm
 }

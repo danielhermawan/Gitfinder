@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/medium_margin">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/medium_space"
+                android:background="?android:attr/selectableItemBackground">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imagePlaceholder"
+        android:layout_width="@dimen/main.placeholder_image"
+        android:layout_height="@dimen/main.placeholder_image"
+        android:src="@drawable/bitmap_placeholder"
+        android:contentDescription="@string/item_repos.placeholder" />
     <TextView
         android:id="@+id/textName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:text="Repository Name"/>
 </RelativeLayout>

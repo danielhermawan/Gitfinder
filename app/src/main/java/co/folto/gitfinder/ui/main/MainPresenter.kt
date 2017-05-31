@@ -16,6 +16,10 @@ class MainPresenter @Inject constructor(
         val view: MainContract.View
 ): MainContract.Presenter {
 
+    init {
+        view.attachPresenter(this)
+    }
+
     private var composite = CompositeDisposable()
 
     override fun subscribe() = loadRepos()
@@ -31,15 +35,32 @@ class MainPresenter @Inject constructor(
             .subscribeBy (
                 onNext = {
                     if(it.isEmpty())
-                        view.showNoRepo()
+                        view.showNoRepo(false)
                     else
                         view.showRepos(it)
                 },
                 onError = {
                     view.showError("Unable to fetch data from github")
+                    view.showNoRepo(true)
                     view.setLoading(false)
                 },
                 onComplete = { view.setLoading(false) }
+            )
+        composite.add(request)
+    }
+
+    override fun loadMoreRepos(page: Int) {
+        val request = repoRepository.getRepos()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy (
+                onNext = {
+                    view.showMoreRepo(it)
+                },
+                onError = {
+                    view.showError("Unable to fetch more data from github")
+                },
+                onComplete = {  }
             )
         composite.add(request)
     }

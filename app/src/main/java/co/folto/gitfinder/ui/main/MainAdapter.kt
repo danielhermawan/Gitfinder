@@ -1,32 +1,40 @@
 package co.folto.gitfinder.ui.main
 
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.view.ViewGroup
-import co.folto.gitfinder.R
+import android.support.v4.util.SparseArrayCompat
 import co.folto.gitfinder.data.model.Repo
-import co.folto.gitfinder.util.inflate
-import kotlinx.android.synthetic.main.item_repos.view.*
+import co.folto.gitfinder.ui.adapter.LoadingDelegateAdapter
+import co.folto.gitfinder.ui.adapter.RepoDelegateAdapter
+import co.folto.gitfinder.util.adapter.*
 
 /**
  * Created by Daniel on 5/24/2017 for GitFInder project.
  */
-class MainAdapter(val repos: List<Repo>, val itemClick: (Repo) -> Unit)
-    : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(val itemClick: (Repo) -> Unit)
+    : BaseAdapter() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-            = ViewHolder(parent.inflate(R.layout.item_repos), itemClick)
+    private val loadingItem = LoadingItem()
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int)
-            = holder.bind(repos[position])
+    override fun setupDelegate(delegateAdapter: SparseArrayCompat<ViewTypeDelegateAdapter>) {
+        delegateAdapter.put(AdapterConstant.LOADING, LoadingDelegateAdapter())
+        delegateAdapter.put(AdapterConstant.REPO, RepoDelegateAdapter(itemClick))
+    }
 
-    override fun getItemCount(): Int = repos.size
+    override fun addData(datas: MutableList<ViewType>) {
+        if(items.size > 0 ){
+            val initPosition = items.size - 1
+            items.removeAt(initPosition)
+            notifyItemRangeChanged(initPosition, items.size + 1)
+        }
+        items.addAll(datas)
+        items.add(loadingItem)
+        notifyDataSetChanged()
+    }
 
-    class ViewHolder(val view: View, val itemClick: (Repo) -> Unit): RecyclerView.ViewHolder(view) {
-        fun bind(repo: Repo) =
-            with(itemView) {
-                textName.text = repo.name
-                setOnClickListener { itemClick(repo) }
-            }
+    override fun refreshData(datas: MutableList<ViewType>) {
+        items.clear()
+        notifyItemRangeRemoved(0, getLastPosition())
+        items.addAll(datas)
+        items.add(loadingItem)
+        notifyItemRangeInserted(0, items.size)
     }
 }
