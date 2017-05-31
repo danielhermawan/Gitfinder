@@ -12,7 +12,7 @@ import io.realm.annotations.PrimaryKey
 open class Repo(
         @PrimaryKey var id: Long = 0,
         var name: String = "",
-        var owner: Owner? = null,
+        var owner: Owner = Owner(),
         @SerializedName("full_name") var fullName: String = "",
         var description: String = "",
         var private: Boolean = false,
