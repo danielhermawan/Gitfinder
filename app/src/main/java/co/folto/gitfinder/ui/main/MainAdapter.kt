@@ -9,32 +9,40 @@ import co.folto.gitfinder.util.adapter.*
 /**
  * Created by Daniel on 5/24/2017 for GitFInder project.
  */
-class MainAdapter(val itemClick: (Repo) -> Unit)
+class MainAdapter(itemClick: (Repo) -> Unit)
     : BaseAdapter() {
 
+    private val delegateAdapter = SparseArrayCompat<ViewTypeDelegateAdapter>()
     private val loadingItem = LoadingItem()
 
-    override fun setupDelegate(delegateAdapter: SparseArrayCompat<ViewTypeDelegateAdapter>) {
+    init {
         delegateAdapter.put(AdapterConstant.LOADING, LoadingDelegateAdapter())
         delegateAdapter.put(AdapterConstant.REPO, RepoDelegateAdapter(itemClick))
     }
 
+    override fun getAdapter() = delegateAdapter
+
     override fun addData(datas: MutableList<ViewType>) {
-        if(items.size > 0 ){
+        if(items.size > 0){
             val initPosition = items.size - 1
             items.removeAt(initPosition)
+            notifyItemRemoved(initPosition)
+            items.addAll(datas)
+            items.add(loadingItem)
             notifyItemRangeChanged(initPosition, items.size + 1)
         }
-        items.addAll(datas)
-        items.add(loadingItem)
-        notifyDataSetChanged()
+
     }
 
     override fun refreshData(datas: MutableList<ViewType>) {
-        items.clear()
+       /* items.clear()
         notifyItemRangeRemoved(0, getLastPosition())
+
         items.addAll(datas)
         items.add(loadingItem)
-        notifyItemRangeInserted(0, items.size)
+        notifyItemRangeInserted(0, items.size)*/
+        items = datas
+        items.add(loadingItem)
+        notifyDataSetChanged()
     }
 }

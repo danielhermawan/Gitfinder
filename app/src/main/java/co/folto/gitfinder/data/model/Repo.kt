@@ -3,14 +3,12 @@ package co.folto.gitfinder.data.model
 import co.folto.gitfinder.util.adapter.AdapterConstant
 import co.folto.gitfinder.util.adapter.ViewType
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 
 /**
  * Created by Daniel on 5/22/2017 for GitFInder project.
  */
-open class Repo(
-        @PrimaryKey var id: Long = 0,
+data class Repo(
+        var id: Long = 0,
         var name: String = "",
         var owner: Owner = Owner(),
         @SerializedName("full_name") var fullName: String = "",
@@ -19,6 +17,6 @@ open class Repo(
         var fork: Boolean = false,
         var url: String = "",
         @SerializedName("html_url") var htmlUrl: String = ""
-) : RealmObject(), ViewType {
+) : ViewType {
     override fun getViewType(): Int = AdapterConstant.REPO
 }

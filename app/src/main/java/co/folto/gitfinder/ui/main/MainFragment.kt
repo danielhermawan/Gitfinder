@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment: Fragment(), MainContract.View{
 
     lateinit private var presenter: MainContract.Presenter
-
     private val repoAdapter = MainAdapter( { presenter.clickRepo(it) } )
 
     companion object {
@@ -82,13 +81,15 @@ class MainFragment: Fragment(), MainContract.View{
         repoAdapter.addData(repos.toMutableList())
     }
 
-
     override fun showError(message: String) {
         view?.showSnack(message)
     }
 
     override fun showNoRepo(isError: Boolean) {
-        if(isError) noTasks.text = resources.getString(R.string.main_no_repos_error)
+        if(isError)
+            noTasks.text = resources.getString(R.string.main_no_repos_error)
+        else
+            noTasks.text = resources.getString(R.string.main_no_repos_found)
         noRepos.visibility = View.VISIBLE
     }
 
