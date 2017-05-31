@@ -9,23 +9,18 @@ import android.view.ViewGroup
  */
 abstract class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     protected var items: MutableList<ViewType> = ArrayList()
-    private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
-    init {
-        setupDelegate(delegateAdapters)
-    }
-
-    abstract fun setupDelegate(delegateAdapter: SparseArrayCompat<ViewTypeDelegateAdapter>)
+    abstract fun getAdapter(): SparseArrayCompat<ViewTypeDelegateAdapter>
 
     abstract fun addData(datas: MutableList<ViewType>)
 
     abstract fun refreshData(datas: MutableList<ViewType>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-            = delegateAdapters.get(viewType).onCreateViewHolder(parent)
+            = getAdapter().get(viewType).onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int)
-            = delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, this.items[position])
+            = getAdapter().get(getItemViewType(position)).onBindViewHolder(holder, this.items[position])
 
     override fun getItemCount(): Int = items.size
 
