@@ -26,7 +26,4 @@ abstract class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun getItemViewType(position: Int): Int
             = items.get(position).getViewType()
-
-
-    protected fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
 }

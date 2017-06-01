@@ -31,16 +31,9 @@ class MainAdapter(itemClick: (Repo) -> Unit)
             items.add(loadingItem)
             notifyItemRangeChanged(initPosition, items.size + 1)
         }
-
     }
 
     override fun refreshData(datas: MutableList<ViewType>) {
-       /* items.clear()
-        notifyItemRangeRemoved(0, getLastPosition())
-
-        items.addAll(datas)
-        items.add(loadingItem)
-        notifyItemRangeInserted(0, items.size)*/
         items = datas
         items.add(loadingItem)
         notifyDataSetChanged()

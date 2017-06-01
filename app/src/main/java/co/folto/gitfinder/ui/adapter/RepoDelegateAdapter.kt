@@ -9,6 +9,7 @@ import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.util.adapter.ViewType
 import co.folto.gitfinder.util.adapter.ViewTypeDelegateAdapter
 import co.folto.gitfinder.util.inflate
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_repos.view.*
 
 /**
@@ -27,14 +28,13 @@ class RepoDelegateAdapter(val itemClick: (Repo) -> Unit): ViewTypeDelegateAdapte
     class RepoViewHolder(val view: View, val context: Context, val itemClick: (Repo) -> Unit): RecyclerView.ViewHolder(view) {
         fun bind(repo: Repo) =
             with(itemView) {
-                /*val imgUrl = "http://placehold.it/" +
+                val imgUrl = "http://placehold.it/" +
                         "${R.dimen.main_placeholder_image}x${R.dimen.main_placeholder_image}/" +
                         "FF4081/ffffff/" +
                         "&text=${repo.name}"
-
                 Glide.with(context)
                     .load(imgUrl)
-                    .into(imagePlaceholder)*/
+                    .into(imagePlaceholder)
                 textName.text = repo.fullName
                 setOnClickListener { itemClick(repo) }
             }

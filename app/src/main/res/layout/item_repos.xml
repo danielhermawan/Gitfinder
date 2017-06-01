@@ -5,12 +5,12 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/medium_space"
                 android:background="?android:attr/selectableItemBackground">
-    <!--<de.hdodenhof.circleimageview.CircleImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagePlaceholder"
         android:layout_width="@dimen/main.placeholder_image"
         android:layout_height="@dimen/main.placeholder_image"
         android:src="@drawable/bitmap_placeholder"
-        android:contentDescription="@string/item_repos.placeholder" />-->
+        android:contentDescription="@string/item_repos.placeholder" />
     <TextView
         android:id="@+id/textName"
         android:layout_width="wrap_content"
