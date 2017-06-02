@@ -2,8 +2,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="medium_space">16dp</dimen>
-    <dimen name="small_space">16dp</dimen>
+    <dimen name="small_space">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_large">18sp</dimen>
 
-    <dimen name="main.placeholder_image">80dp</dimen>
+    <dimen name="main.placeholder_image">50dp</dimen>
 </resources>

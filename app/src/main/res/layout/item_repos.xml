@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/medium_space"
-                android:background="?android:attr/selectableItemBackground">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imagePlaceholder"
-        android:layout_width="@dimen/main.placeholder_image"
-        android:layout_height="@dimen/main.placeholder_image"
-        android:src="@drawable/bitmap_placeholder"
-        android:contentDescription="@string/item_repos.placeholder" />
-    <TextView
-        android:id="@+id/textName"
-        android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:padding="@dimen/medium_space"
+              android:background="?android:attr/selectableItemBackground">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="10"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagePlaceholder"
+            android:layout_width="@dimen/main.placeholder_image"
+            android:layout_height="@dimen/main.placeholder_image"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/item_repos.placeholder" />
+
+        <TextView
+            android:id="@+id/textName"
+            style="@style/textLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_space"
+            android:layout_marginStart="@dimen/small_space"
+            android:layout_toEndOf="@id/imagePlaceholder"
+            android:layout_toRightOf="@id/imagePlaceholder"
+            tools:text="repository name"/>
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textName"
+            android:layout_alignLeft="@id/textName"
+            android:layout_alignStart="@id/textName"
+            android:layout_marginTop="@dimen/small_space"
+            android:ellipsize="end"
+            android:maxLines="2"
+            style="@style/textMedium"
+            tools:text="Repository Description"/>
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/imgPrivate"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        tools:text="Repository Name"/>
-</RelativeLayout>
+        android:layout_gravity="bottom|end"
+        tools:srcCompat="@drawable/ic_lock_outline_black_24dp"
+        android:contentDescription="@string/main.icon_private_description"/>
+</LinearLayout>

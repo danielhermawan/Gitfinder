@@ -8,8 +8,10 @@ import co.folto.gitfinder.R
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.util.adapter.ViewType
 import co.folto.gitfinder.util.adapter.ViewTypeDelegateAdapter
+import co.folto.gitfinder.util.getUrlImagePlaceholder
 import co.folto.gitfinder.util.inflate
-import com.bumptech.glide.Glide
+import co.folto.gitfinder.util.loadNetworkImage
+import co.folto.gitfinder.util.obtainDrawable
 import kotlinx.android.synthetic.main.item_repos.view.*
 
 /**
@@ -28,14 +30,13 @@ class RepoDelegateAdapter(val itemClick: (Repo) -> Unit): ViewTypeDelegateAdapte
     class RepoViewHolder(val view: View, val context: Context, val itemClick: (Repo) -> Unit): RecyclerView.ViewHolder(view) {
         fun bind(repo: Repo) =
             with(itemView) {
-                val imgUrl = "http://placehold.it/" +
-                        "${R.dimen.main_placeholder_image}x${R.dimen.main_placeholder_image}/" +
-                        "FF4081/ffffff/" +
-                        "&text=${repo.name}"
-                Glide.with(context)
-                    .load(imgUrl)
-                    .into(imagePlaceholder)
+                imagePlaceholder.loadNetworkImage(context, repo.name.getUrlImagePlaceholder())
                 textName.text = repo.fullName
+                textDescription.text = repo.description
+                if(repo.private)
+                    imgPrivate.setImageDrawable(resources.obtainDrawable(R.drawable.ic_lock_outline_black_24dp, context))
+                else
+                    imgPrivate.setImageDrawable(resources.obtainDrawable(R.drawable.ic_lock_open_black_24dp, context))
                 setOnClickListener { itemClick(repo) }
             }
     }

@@ -10,4 +10,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="textLarge">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="textMedium">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
 </resources>

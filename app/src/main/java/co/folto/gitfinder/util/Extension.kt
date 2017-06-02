@@ -3,6 +3,8 @@ package co.folto.gitfinder.util
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -13,8 +15,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import co.folto.gitfinder.R
+import java.util.*
 
 /**
  * Created by Daniel on 5/24/2017 for GitFInder project.
@@ -36,6 +40,30 @@ fun SwipeRefreshLayout.setDefaultColors(context: Context)
         ContextCompat.getColor(context, R.color.colorPrimary),
         ContextCompat.getColor(context, R.color.colorAccent),
         ContextCompat.getColor(context, R.color.colorPrimaryDark))
+
+fun Resources.obtainDrawable(id: Int, context: Context): Drawable =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            this.getDrawable(id, context.getTheme())
+        else
+            this.getDrawable(id)
+
+fun String.getUrlImagePlaceholder(): String {
+    val colors = arrayOf("FF4081", "3F51B5", "4caf50", "ffeb3b")
+    val random = Random().nextInt(colors.size)
+    return "http://placehold.it/50x50/${colors[random]}/ffffff/&text=${this[0].toUpperCase()}"
+}
+
+fun ImageView.loadNetworkImage(context: Context,
+                               url: String,
+                               placeholder: Int = R.drawable.bitmap_image_loading,
+                               errorImage: Int = R.drawable.bitmap_image_unavailable)
+        = GlideApp.with(context)
+            .load(url)
+            .placeholder(placeholder)
+            .error(errorImage)
+            /*.transition(withCrossFade())*/
+            .into(this)
+
 
 @TargetApi(Build.VERSION_CODES.M)
 fun AppCompatActivity.requestPermissionsSafely(permissions: Array<String>, requestCode: Int) {
