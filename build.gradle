@@ -40,6 +40,7 @@ ext {
     buildToolsVersion = '25.0.3'
 
     kotlinVersion = '1.1.2-4'
+    jodaTime = "2.9.9"
     androidComponent = '1.0.0-alpha1'
     supportLibraryVersion = '25.3.1'
     constraintLayout = '1.0.2'
