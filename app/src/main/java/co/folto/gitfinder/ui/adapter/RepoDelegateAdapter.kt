@@ -8,12 +8,12 @@ import co.folto.gitfinder.R
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.util.adapter.ViewType
 import co.folto.gitfinder.util.adapter.ViewTypeDelegateAdapter
+import co.folto.gitfinder.util.formatDate
 import co.folto.gitfinder.util.inflate
 import co.folto.gitfinder.util.loadNetworkImage
 import co.folto.gitfinder.util.obtainDrawable
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_repos.view.*
-import org.joda.time.DateTime
 
 
 /**
@@ -32,16 +32,14 @@ class RepoDelegateAdapter(val itemClick: (Repo) -> Unit): ViewTypeDelegateAdapte
     class RepoViewHolder(val view: View, val context: Context, val itemClick: (Repo) -> Unit): RecyclerView.ViewHolder(view) {
         fun bind(repo: Repo) =
             with(itemView) {
-                imagePlaceholder.loadNetworkImage(
-                        context,
-                        repo.owner.avatarUrl,
+                imagePlaceholder.loadNetworkImage(context, repo.owner.avatarUrl,
                         options = RequestOptions().circleCrop())
                 textName.text = repo.fullName
                 textDescription.text = repo.description
                 textStarCount.text = repo.stargazersCount.toString()
                 textForkCount.text = repo.forks.toString()
                 textWatchCount.text = repo.watchers.toString()
-                textUpdated.text = DateTime(repo.updatedAt).toString("dd/MM")
+                textUpdated.text = repo.createdAt.formatDate("MM/yyyy")
                 if(repo.private)
                     imgPrivate.setImageDrawable(resources.obtainDrawable(R.drawable.ic_lock_outline_black_24dp, context))
                 else

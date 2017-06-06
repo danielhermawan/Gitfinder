@@ -5,17 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import co.folto.gitfinder.GitfinderApplication
 import co.folto.gitfinder.R
 import co.folto.gitfinder.util.addToActitivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 
 class DetailActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var presenter: DetailPresenter
 
     companion object {
         private val REPO_ID = "REPO_ID"
@@ -36,11 +31,6 @@ class DetailActivity : AppCompatActivity() {
             fragment = DetailFragment.newInstance(intent.getStringExtra(REPO_ID))
             supportFragmentManager.addToActitivity(fragment, R.id.contentFrame)
         }
-        DaggerDetailComponent.builder()
-                .dataComponent(GitfinderApplication.dataComponent)
-                .detailPresenterModule(DetailPresenterModule(fragment, intent.getStringExtra(REPO_ID) ))
-                .build()
-                .inject(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

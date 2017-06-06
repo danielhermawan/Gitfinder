@@ -5,16 +5,21 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.folto.gitfinder.GitfinderApplication
 import co.folto.gitfinder.R
+import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.util.showSnack
 import kotlinx.android.synthetic.main.fragment_detail.*
+import javax.inject.Inject
 
 /**
  * Created by Daniel on 6/5/2017 for GitFInder project.
  */
 class DetailFragment: Fragment(), DetailContract.View {
 
+    @Inject
+    lateinit var repoRepository: RepoRepository
     lateinit private var presenter: DetailContract.Presenter
 
     companion object {
@@ -31,6 +36,8 @@ class DetailFragment: Fragment(), DetailContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        GitfinderApplication.dataComponent.inject(this)
+        DetailPresenter(repoRepository, this, arguments.getString(DETAIL_REPO_ID))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -40,13 +47,13 @@ class DetailFragment: Fragment(), DetailContract.View {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         presenter.subscribe();
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 

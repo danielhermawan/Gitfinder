@@ -1,4 +1,4 @@
-package co.folto.gitfinder.ui.main
+package co.folto.gitfinder.ui.trending
 
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
@@ -11,10 +11,10 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by Daniel on 5/23/2017 for GitFInder project.
  */
-class MainPresenter (
+class TrendingPresenter(
         val repoRepository: RepoRepository,
-        val view: MainContract.View
-): MainContract.Presenter {
+        val view: TrendingContract.View
+): TrendingContract.Presenter {
 
     init {
         view.attachPresenter(this)
@@ -62,7 +62,7 @@ class MainPresenter (
     }
 
     override fun clickRepo(repo: Repo)
-            = view.goToDetailRepo(repo.fullName)
+            = view.goToDetailRepo(repo)
 
     fun getRepo(page: Int): Flowable<List<Repo>>
             = repoRepository.getTrending(page)

@@ -9,7 +9,7 @@
               android:baselineAligned="false">
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_weight="8"
+        android:layout_weight="7"
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imagePlaceholder"

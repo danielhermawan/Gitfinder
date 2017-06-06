@@ -1,55 +1,59 @@
-package co.folto.gitfinder.ui.main
+package co.folto.gitfinder.ui.trending
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import co.folto.gitfinder.GitfinderApplication
 import co.folto.gitfinder.R
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
-import co.folto.gitfinder.ui.repodetail.DetailActivity
-import co.folto.gitfinder.util.DividerItemDecoration
-import co.folto.gitfinder.util.EndlessRecyclerViewScrollListener
-import co.folto.gitfinder.util.setDefaultColors
-import co.folto.gitfinder.util.showSnack
-import kotlinx.android.synthetic.main.fragment_main.*
+import co.folto.gitfinder.ui.adapter.RepoAdapter
+import co.folto.gitfinder.util.*
+import kotlinx.android.synthetic.main.fragment_trending.*
 import javax.inject.Inject
 
 /**
  * Created by Daniel on 5/26/2017 for GitFInder project.
  */
-class MainFragment: Fragment(), MainContract.View{
+class TrendingFragment : Fragment(), TrendingContract.View {
 
-    @Inject lateinit var repoRepository: RepoRepository
-    lateinit private var presenter: MainContract.Presenter
-    private val repoAdapter = MainAdapter( { presenter.clickRepo(it) } )
+    @Inject
+    lateinit var repoRepository: RepoRepository
+    lateinit private var presenter: TrendingContract.Presenter
+    private val repoAdapter = RepoAdapter( { presenter.clickRepo(it) } )
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = TrendingFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        setHasOptionsMenu(true)
         GitfinderApplication.dataComponent.inject(this)
-        MainPresenter(repoRepository, this)
+        TrendingPresenter(repoRepository, this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
-            = inflater.inflate(R.layout.fragment_main, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        return inflater.inflate(R.layout.fragment_trending, container, false)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.subscribe()
         val linearLayoutManager = LinearLayoutManager(activity)
         with(rvRepos) {
             setHasFixedSize(true)
             adapter = repoAdapter
-            layoutManager = linearLayoutManager
+            layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
             addOnScrollListener(EndlessRecyclerViewScrollListener(linearLayoutManager) {
-                page, count, rv -> presenter.loadMoreRepos(page)
+                page, count, rv ->
+                presenter.loadMoreRepos(page)
             })
         }
         with(swipeContainer) {
@@ -61,11 +65,16 @@ class MainFragment: Fragment(), MainContract.View{
 
     }
 
-    override fun attachPresenter(presenter: MainContract.Presenter) {
+    override fun attachPresenter(presenter: TrendingContract.Presenter) {
         this.presenter = presenter
     }
 
-    override fun onStart() {
+    override fun onDestroyView() {
+        presenter.unsubscribe()
+        super.onDestroyView()
+    }
+
+    /*override fun onStart() {
         super.onStart()
         presenter.subscribe();
     }
@@ -73,28 +82,14 @@ class MainFragment: Fragment(), MainContract.View{
     override fun onStop() {
         super.onStop()
         presenter.unsubscribe()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            R.id.item_search -> {
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     override fun setLoading(active: Boolean) {
         swipeContainer.isRefreshing = active
     }
 
     override fun showRepos(repos: List<Repo>) {
-        noRepos.visibility = View.GONE
+        noRepos.visibility = android.view.View.GONE
         repoAdapter.refreshData(repos.toMutableList())
     }
 
@@ -111,9 +106,11 @@ class MainFragment: Fragment(), MainContract.View{
             noTasks.text = resources.getString(R.string.main_no_repos_error)
         else
             noTasks.text = resources.getString(R.string.main_no_repos_found)
-        noRepos.visibility = View.VISIBLE
+        noRepos.visibility = android.view.View.VISIBLE
     }
 
-    override fun goToDetailRepo(id: String)
-            = activity.startActivity(DetailActivity.newIntent(activity, id))
+    override fun goToDetailRepo(repo: Repo) {
+       activity.openChromeTabs(repo.htmlUrl)
+    }
+            /*= activity.startActivity(DetailActivity.newIntent(activity, id))*/
 }

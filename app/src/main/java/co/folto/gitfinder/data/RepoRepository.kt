@@ -38,4 +38,11 @@ class RepoRepository @Inject constructor(
                 .map { it.items }
     }
 
+    override fun getPopular(page: Int): Flowable<List<Repo>> {
+        val dt = DateTime()
+        val pushed = dt.minusMonths(1).toString("yyyy-MM-dd")
+        return gitService.searchRepo(search = "pushed:>$pushed", page = page)
+                .map { it.items }
+    }
+
 }

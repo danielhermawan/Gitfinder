@@ -1,15 +1,13 @@
-package co.folto.gitfinder.ui.main
+package co.folto.gitfinder.ui.adapter
 
 import android.support.v4.util.SparseArrayCompat
 import co.folto.gitfinder.data.model.Repo
-import co.folto.gitfinder.ui.adapter.LoadingDelegateAdapter
-import co.folto.gitfinder.ui.adapter.RepoDelegateAdapter
 import co.folto.gitfinder.util.adapter.*
 
 /**
  * Created by Daniel on 5/24/2017 for GitFInder project.
  */
-class MainAdapter(itemClick: (Repo) -> Unit)
+class RepoAdapter(itemClick: (Repo) -> Unit)
     : BaseAdapter() {
 
     private val delegateAdapter = SparseArrayCompat<ViewTypeDelegateAdapter>()

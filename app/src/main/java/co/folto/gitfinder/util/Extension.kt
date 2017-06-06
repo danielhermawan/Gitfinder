@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
+import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -20,6 +22,7 @@ import android.widget.Toast
 import co.folto.gitfinder.R
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -64,16 +67,27 @@ fun ImageView.loadNetworkImage(context: Context,
             .load(url)
             .placeholder(placeholder)
             .error(errorImage)
+            .apply(options)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             /*.transition(withCrossFade())*/
             .into(this)
 
+fun Context.openChromeTabs(url: String) {
+    val builder = CustomTabsIntent.Builder()
+    builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+    builder.addDefaultShareMenuItem();
+    val customTabsIntent = builder.build()
+    customTabsIntent.launchUrl(this, Uri.parse(url));
+}
+
+fun String.formatDate(format: String)
+    = DateTime(this).toString(format)
 
 @TargetApi(Build.VERSION_CODES.M)
 fun AppCompatActivity.requestPermissionsSafely(permissions: Array<String>, requestCode: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            this.requestPermissions(permissions, requestCode)
-    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        this.requestPermissions(permissions, requestCode)
+}
 
 @TargetApi(Build.VERSION_CODES.M)
 fun AppCompatActivity.hasPermission(permission: String)

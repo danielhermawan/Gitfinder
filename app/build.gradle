@@ -41,6 +41,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayout"
     compile "com.android.support:percent:$rootProject.supportLibraryVersion"
+    compile "com.android.support:customtabs:$rootProject.supportLibraryVersion"
     compile "joda-time:joda-time:$rootProject.jodaTime"
     //todo: check documentation and configuration
     /*compile('com.mikepenz:materialdrawer:5.8.1@aar') {

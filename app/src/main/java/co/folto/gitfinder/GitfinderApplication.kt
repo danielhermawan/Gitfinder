@@ -25,6 +25,7 @@ class GitfinderApplication: Application() {
     //todo: Make base fragment and stuff
     //todo: Fix and made it like reddit
     //todo: Glide and okhttp
+    //todo: search, filter, fix detail, bottom navigation, search by language or topic
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
