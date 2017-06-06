@@ -7,12 +7,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 /**
  * Created by Daniel on 5/23/2017 for GitFInder project.
  */
-class MainPresenter @Inject constructor(
+class MainPresenter (
         val repoRepository: RepoRepository,
         val view: MainContract.View
 ): MainContract.Presenter {
@@ -62,10 +61,8 @@ class MainPresenter @Inject constructor(
         composite.add(request)
     }
 
-    override fun clickRepo(repo: Repo) {
-        view.goToDetailRepo(repo.fullName)
-    }
-
+    override fun clickRepo(repo: Repo)
+            = view.goToDetailRepo(repo.fullName)
 
     fun getRepo(page: Int): Flowable<List<Repo>>
             = repoRepository.getTrending(page)

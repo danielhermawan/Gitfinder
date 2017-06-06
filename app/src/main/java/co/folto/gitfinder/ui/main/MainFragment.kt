@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import co.folto.gitfinder.GitfinderApplication
 import co.folto.gitfinder.R
+import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.ui.repodetail.DetailActivity
 import co.folto.gitfinder.util.DividerItemDecoration
@@ -12,12 +14,14 @@ import co.folto.gitfinder.util.EndlessRecyclerViewScrollListener
 import co.folto.gitfinder.util.setDefaultColors
 import co.folto.gitfinder.util.showSnack
 import kotlinx.android.synthetic.main.fragment_main.*
+import javax.inject.Inject
 
 /**
  * Created by Daniel on 5/26/2017 for GitFInder project.
  */
 class MainFragment: Fragment(), MainContract.View{
 
+    @Inject lateinit var repoRepository: RepoRepository
     lateinit private var presenter: MainContract.Presenter
     private val repoAdapter = MainAdapter( { presenter.clickRepo(it) } )
 
@@ -29,6 +33,8 @@ class MainFragment: Fragment(), MainContract.View{
         super.onCreate(savedInstanceState)
         retainInstance = true
         setHasOptionsMenu(true)
+        GitfinderApplication.dataComponent.inject(this)
+        MainPresenter(repoRepository, this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
