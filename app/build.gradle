@@ -41,12 +41,13 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayout"
     compile "com.android.support:percent:$rootProject.supportLibraryVersion"
+    compile "joda-time:joda-time:$rootProject.jodaTime"
     //todo: check documentation and configuration
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+    /*compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true
-    }
+    }*/
     /*compile 'com.afollestad.material-dialogs:core:0.9.2.3'*/
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    
 
     /*compile "android.arch.persistence.room:runtime:$rootProject.androidComponent"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.androidComponent"
@@ -86,8 +87,11 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     provided 'javax.annotation:jsr250-api:1.0'
 }
+
 repositories {
     mavenCentral()
 }

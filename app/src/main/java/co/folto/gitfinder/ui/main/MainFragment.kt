@@ -3,11 +3,10 @@ package co.folto.gitfinder.ui.main
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import co.folto.gitfinder.R
 import co.folto.gitfinder.data.model.Repo
+import co.folto.gitfinder.ui.repodetail.DetailActivity
 import co.folto.gitfinder.util.DividerItemDecoration
 import co.folto.gitfinder.util.EndlessRecyclerViewScrollListener
 import co.folto.gitfinder.util.setDefaultColors
@@ -29,6 +28,7 @@ class MainFragment: Fragment(), MainContract.View{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
@@ -59,14 +59,28 @@ class MainFragment: Fragment(), MainContract.View{
         this.presenter = presenter
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         presenter.subscribe();
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.item_search -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun setLoading(active: Boolean) {
@@ -74,6 +88,7 @@ class MainFragment: Fragment(), MainContract.View{
     }
 
     override fun showRepos(repos: List<Repo>) {
+        noRepos.visibility = View.GONE
         repoAdapter.refreshData(repos.toMutableList())
     }
 
@@ -93,7 +108,6 @@ class MainFragment: Fragment(), MainContract.View{
         noRepos.visibility = View.VISIBLE
     }
 
-    override fun goToDetailRepo(id: Long) {
-
-    }
+    override fun goToDetailRepo(id: String)
+            = activity.startActivity(DetailActivity.newIntent(activity, id))
 }

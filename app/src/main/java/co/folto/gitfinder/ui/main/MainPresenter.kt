@@ -2,6 +2,7 @@ package co.folto.gitfinder.ui.main
 
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -29,9 +30,7 @@ class MainPresenter @Inject constructor(
     override fun loadRepos() {
         view.setLoading(true)
         composite.clear()
-        val request = repoRepository.getRepos()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        val request = getRepo(1)
             .subscribeBy (
                 onNext = {
                     if(it.isEmpty())
@@ -50,9 +49,7 @@ class MainPresenter @Inject constructor(
     }
 
     override fun loadMoreRepos(page: Int) {
-        val request = repoRepository.getRepos()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        val request = getRepo(page)
             .subscribeBy (
                 onNext = {
                     view.showMoreRepo(it)
@@ -66,6 +63,13 @@ class MainPresenter @Inject constructor(
     }
 
     override fun clickRepo(repo: Repo) {
-        view.goToDetailRepo(repo.id)
+        view.goToDetailRepo(repo.fullName)
     }
+
+
+    fun getRepo(page: Int): Flowable<List<Repo>>
+            = repoRepository.getTrending(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+
 }

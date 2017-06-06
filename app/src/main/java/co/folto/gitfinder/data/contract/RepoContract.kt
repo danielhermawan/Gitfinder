@@ -9,4 +9,6 @@ import io.reactivex.Flowable
 interface RepoContract {
 
     fun getRepos(): Flowable<List<Repo>>
+    fun getRepo(owner: String, repo: String): Flowable<Repo>
+    fun getTrending(page: Int = 1): Flowable<List<Repo>>
 }

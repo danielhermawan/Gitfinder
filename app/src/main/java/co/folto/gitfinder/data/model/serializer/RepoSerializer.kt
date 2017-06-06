@@ -22,6 +22,14 @@ class RepoSerializer: JsonSerializer<Repo> {
         jsonObject.addProperty("fork", src.fork)
         jsonObject.addProperty("url", src.url)
         jsonObject.addProperty("htmlUrl", src.htmlUrl)
+        jsonObject.addProperty("htmlUrl", src.htmlUrl)
+        jsonObject.addProperty("homepage", src.homepage)
+        jsonObject.addProperty("size", src.size)
+        jsonObject.addProperty("stargazersCount", src.stargazersCount)
+        jsonObject.addProperty("watchers", src.watchers)
+        jsonObject.addProperty("forks", src.forks)
+        jsonObject.addProperty("openIssues", src.openIssues)
+        jsonObject.addProperty("language", src.language)
         return jsonObject
     }
 }

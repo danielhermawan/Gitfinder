@@ -10,4 +10,7 @@
     <string name="main.no_repos_error">There is some network issue…</string>
     <string name="item_repos.placeholder">Image Placeholder</string>
     <string name="main.icon_private_description">Icon whether repo private or not</string>
+    <string name="icon_image_warning">Icon Image Warning</string>
+    <string name="detail_error_message">We have some trouble getting to github</string>
+    <string name="search">Search</string>
 </resources>

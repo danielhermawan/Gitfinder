@@ -13,7 +13,7 @@ interface MainContract {
         fun showRepos(repos: List<Repo>)
         fun showError(message: String)
         fun showNoRepo(isError: Boolean)
-        fun goToDetailRepo(id: Long)
+        fun goToDetailRepo(id: String)
         fun showMoreRepo(repos: List<Repo>)
     }
 
@@ -21,5 +21,6 @@ interface MainContract {
         fun loadRepos()
         fun loadMoreRepos(page: Int)
         fun clickRepo(repo: Repo)
+
     }
 }

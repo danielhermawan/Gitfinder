@@ -18,6 +18,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import co.folto.gitfinder.R
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import java.util.*
 
 /**
@@ -56,11 +58,13 @@ fun String.getUrlImagePlaceholder(): String {
 fun ImageView.loadNetworkImage(context: Context,
                                url: String,
                                placeholder: Int = R.drawable.bitmap_image_loading,
-                               errorImage: Int = R.drawable.bitmap_image_unavailable)
+                               errorImage: Int = R.drawable.bitmap_image_unavailable,
+                               options: RequestOptions = RequestOptions())
         = GlideApp.with(context)
             .load(url)
             .placeholder(placeholder)
             .error(errorImage)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             /*.transition(withCrossFade())*/
             .into(this)
 

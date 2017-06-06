@@ -9,6 +9,7 @@ import co.folto.gitfinder.data.model.serializer.OwnerSerializer
 import co.folto.gitfinder.data.model.serializer.RepoSerializer
 import co.folto.gitfinder.data.remote.GitService
 import co.folto.gitfinder.injection.ApplicationContext
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.*
 import dagger.Module
 import dagger.Provides
@@ -76,6 +77,7 @@ class DataModule(val baseUrl: String) {
         return OkHttpClient()
                 .newBuilder()
                 .addInterceptor(logging)
+                .addNetworkInterceptor(StethoInterceptor())
                 .cache(cache)
                 .build()
     }

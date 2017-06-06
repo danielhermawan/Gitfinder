@@ -14,6 +14,7 @@ class OwnerSerializer: JsonSerializer<Owner> {
     override fun serialize(src: Owner, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
         val jsonObject = JsonObject()
         jsonObject.addProperty("id", src.id)
+        jsonObject.addProperty("type", src.type)
         jsonObject.addProperty("login", src.login)
         jsonObject.addProperty("avatarUrl", src.avatarUrl)
         jsonObject.addProperty("gravatarId", src.gravatarId)

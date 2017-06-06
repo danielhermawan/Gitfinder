@@ -17,4 +17,13 @@
     <style name="textMedium">
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
+
+    <style name="textSmall">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="textSmall.textIcon">
+        <item name="android:drawablePadding">@dimen/very_small_space</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

@@ -10,6 +10,7 @@ import io.realm.annotations.PrimaryKey
 open class Owner(
         @PrimaryKey var id: Long = 0,
         var login: String = "",
+        var type: String = "",
         @SerializedName("avatar_url") var avatarUrl: String = "",
         @SerializedName("gravatar_id") var gravatarId: String = ""
 ): RealmObject()

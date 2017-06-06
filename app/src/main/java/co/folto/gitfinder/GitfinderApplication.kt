@@ -22,6 +22,9 @@ class GitfinderApplication: Application() {
     //todo: experiment with new android component like livedata, room, view model and optional data binding
     //todo: add leakcanary, pmd, bugfinder, analythic and other tools stuff
     //todo: integrated repository with realm for caching
+    //todo: Make base fragment and stuff
+    //todo: Fix and made it like reddit
+    //todo: Glide and okhttp
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
