@@ -36,6 +36,9 @@ class RepoRepository @Inject constructor(
                  search = "pushed:>$pushed created:>$created",
                  page = page )
                 .map { it.items }
+                .doOnNext {
+
+                }
     }
 
     override fun getPopular(page: Int): Flowable<List<Repo>> {

@@ -24,7 +24,7 @@ class PopularFragment: Fragment(), PopularContract.View {
     @Inject
     lateinit var repoRepository: RepoRepository
     lateinit private var presenter: PopularContract.Presenter
-    private val repoAdapter = RepoAdapter( { presenter.clickRepo(it) } )
+    private val repoAdapter = RepoAdapter( { activity.openChromeTabs(it.htmlUrl) } )
 
     companion object {
         fun newInstance() = PopularFragment()
@@ -96,8 +96,5 @@ class PopularFragment: Fragment(), PopularContract.View {
         noRepos.visibility = android.view.View.VISIBLE
     }
 
-    override fun goToDetailRepo(repo: Repo) {
-        activity.openChromeTabs(repo.htmlUrl)
-    }
             /*= activity.startActivity(DetailActivity.newIntent(activity, id))*/
 }

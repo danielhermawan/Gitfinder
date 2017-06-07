@@ -1,6 +1,7 @@
 package co.folto.gitfinder
 
 import android.app.Application
+import co.folto.gitfinder.data.local.RealmModule
 import co.folto.gitfinder.injection.component.DaggerDataComponent
 import co.folto.gitfinder.injection.component.DataComponent
 import co.folto.gitfinder.injection.module.ApplicationModule
@@ -8,6 +9,7 @@ import co.folto.gitfinder.injection.module.DataModule
 import com.facebook.stetho.Stetho
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import timber.log.Timber
 
 /**
@@ -28,6 +30,13 @@ class GitfinderApplication: Application() {
     //todo: search, filter, fix detail, bottom navigation, search by language or topic
     override fun onCreate() {
         super.onCreate()
+        Realm.init(this)
+        val config = RealmConfiguration.Builder()
+                .modules(RealmModule())
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                .build()
+        Realm.setDefaultConfiguration(config)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
             Stetho.initialize(
@@ -36,7 +45,6 @@ class GitfinderApplication: Application() {
                     .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                     .build());
         }
-        Realm.init(this)
         dataComponent = DaggerDataComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .dataModule(DataModule("https://api.github.com/"))

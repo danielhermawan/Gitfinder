@@ -13,13 +13,11 @@ interface TrendingContract {
         fun showRepos(repos: List<Repo>)
         fun showError(message: String)
         fun showNoRepo(isError: Boolean)
-        fun goToDetailRepo(repo: Repo)
         fun showMoreRepo(repos: List<Repo>)
     }
 
     interface Presenter: BasePresenter {
         fun loadRepos()
         fun loadMoreRepos(page: Int)
-        fun clickRepo(repo: Repo)
     }
 }

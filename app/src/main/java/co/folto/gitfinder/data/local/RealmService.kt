@@ -1,5 +1,6 @@
 package co.folto.gitfinder.data.local
 
+import co.folto.gitfinder.data.model.Repo
 import io.realm.Realm
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,4 +13,8 @@ class RealmService @Inject constructor(
         private val realm: Realm
 ){
     fun closeRealm() = realm.close()
+
+    fun saveRepos(repos: List<Repo>){
+
+    }
 }

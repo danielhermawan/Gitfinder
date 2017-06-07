@@ -62,9 +62,6 @@ class PopularPresenter(
         composite.add(request)
     }
 
-    override fun clickRepo(repo: Repo) = view.goToDetailRepo(repo)
-            /*= view.goToDetailRepo(repo.fullName)*/
-
     fun getRepo(page: Int): Flowable<List<Repo>>
             = repoRepository.getPopular(page)
                 .subscribeOn(Schedulers.io())

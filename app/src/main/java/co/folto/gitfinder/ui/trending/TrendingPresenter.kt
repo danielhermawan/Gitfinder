@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 /**
  * Created by Daniel on 5/23/2017 for GitFInder project.
@@ -24,7 +25,9 @@ class TrendingPresenter(
 
     override fun subscribe() = loadRepos()
 
-    override fun unsubscribe() = composite.clear()
+    override fun unsubscribe() {
+        composite.clear()
+    }
 
     override fun loadRepos() {
         view.setLoading(true)
@@ -38,6 +41,7 @@ class TrendingPresenter(
                         view.showRepos(it)
                 },
                 onError = {
+                    Timber.e(it)
                     view.showError("Unable to fetch data from github")
                     view.showNoRepo(true)
                     view.setLoading(false)
@@ -60,9 +64,6 @@ class TrendingPresenter(
             )
         composite.add(request)
     }
-
-    override fun clickRepo(repo: Repo)
-            = view.goToDetailRepo(repo)
 
     fun getRepo(page: Int): Flowable<List<Repo>>
             = repoRepository.getTrending(page)

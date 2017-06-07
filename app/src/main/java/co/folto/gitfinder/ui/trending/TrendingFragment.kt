@@ -24,7 +24,7 @@ class TrendingFragment : Fragment(), TrendingContract.View {
     @Inject
     lateinit var repoRepository: RepoRepository
     lateinit private var presenter: TrendingContract.Presenter
-    private val repoAdapter = RepoAdapter( { presenter.clickRepo(it) } )
+    private val repoAdapter = RepoAdapter( { activity.openChromeTabs(it.htmlUrl) } )
 
     companion object {
         fun newInstance() = TrendingFragment()
@@ -108,9 +108,4 @@ class TrendingFragment : Fragment(), TrendingContract.View {
             noTasks.text = resources.getString(R.string.main_no_repos_found)
         noRepos.visibility = android.view.View.VISIBLE
     }
-
-    override fun goToDetailRepo(repo: Repo) {
-       activity.openChromeTabs(repo.htmlUrl)
-    }
-            /*= activity.startActivity(DetailActivity.newIntent(activity, id))*/
 }
