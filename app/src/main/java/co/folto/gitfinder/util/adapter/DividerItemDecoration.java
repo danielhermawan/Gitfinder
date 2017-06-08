@@ -1,4 +1,4 @@
-package co.folto.gitfinder.util;
+package co.folto.gitfinder.util.adapter;
 
 import android.content.Context;
 import android.content.res.TypedArray;

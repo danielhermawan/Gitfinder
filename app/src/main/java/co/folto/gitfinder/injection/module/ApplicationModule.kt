@@ -2,7 +2,7 @@ package co.folto.gitfinder.injection.module
 
 import android.app.Application
 import android.content.Context
-import co.folto.gitfinder.injection.ApplicationContext
+import co.folto.gitfinder.injection.annotation.ApplicationContext
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,10 +15,11 @@ class ApplicationModule(val application: Application) {
 
     @Provides
     @Singleton
-    fun providesApplication(): android.app.Application = application
+    fun providesApplication(): Application = application
 
     @Provides
     @Singleton
     @ApplicationContext
     fun provideContext(): Context = application
+
 }

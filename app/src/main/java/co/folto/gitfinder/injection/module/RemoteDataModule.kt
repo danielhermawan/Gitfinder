@@ -1,19 +1,14 @@
 package co.folto.gitfinder.injection.module
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import co.folto.gitfinder.BuildConfig
 import co.folto.gitfinder.data.model.serializer.OwnerSerializer
 import co.folto.gitfinder.data.model.serializer.RepoSerializer
 import co.folto.gitfinder.data.remote.GitService
-import co.folto.gitfinder.injection.ApplicationContext
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.*
 import dagger.Module
 import dagger.Provides
-import io.realm.Realm
 import io.realm.RealmObject
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -24,12 +19,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import javax.inject.Singleton
 
-
 /**
- * Created by Daniel on 5/22/2017 for GitFInder project.
+ * Created by Daniel on 6/8/2017 for GitFInder project.
  */
 @Module
-class DataModule(val baseUrl: String) {
+class RemoteDataModule {
+    private val BASE_URL = "https://api.github.com/"
 
     @Provides
     @Singleton
@@ -40,16 +35,11 @@ class DataModule(val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideSharedPreference(@ApplicationContext context: Context):SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
-
-    @Provides
-    @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setExclusionStrategies(object: ExclusionStrategy{
+                .setExclusionStrategies(object: ExclusionStrategy {
                     override fun shouldSkipClass(clazz: Class<*>?): Boolean = false
 
                     override fun shouldSkipField(f: FieldAttributes?): Boolean =
@@ -59,7 +49,6 @@ class DataModule(val baseUrl: String) {
                 .registerTypeAdapter(Class.forName("io.realm.OwnerRealmProxy"), OwnerSerializer())
                 .registerTypeAdapter(Class.forName("io.realm.RepoRealmProxy"), RepoSerializer())
                 .create()
-
     }
 
     @Provides
@@ -85,7 +74,7 @@ class DataModule(val baseUrl: String) {
     @Provides
     @Singleton
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
@@ -94,9 +83,5 @@ class DataModule(val baseUrl: String) {
     @Provides
     @Singleton
     fun provideGitService(retrofit: Retrofit): GitService = retrofit.create(GitService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideRealm(): Realm = Realm.getDefaultInstance()
 
 }

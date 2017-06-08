@@ -1,8 +1,8 @@
 package co.folto.gitfinder.data
 
 import co.folto.gitfinder.data.contract.RepoContract
+import co.folto.gitfinder.data.local.DatabaseService
 import co.folto.gitfinder.data.local.PreferenceHelper
-import co.folto.gitfinder.data.local.RealmService
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.data.remote.GitService
 import io.reactivex.Flowable
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class RepoRepository @Inject constructor(
         private val gitService: GitService,
-        private val realmService: RealmService,
+        private val databaseService: DatabaseService,
         private val preferenceHelper: PreferenceHelper
 ): RepoContract{
 
@@ -32,13 +32,8 @@ class RepoRepository @Inject constructor(
         val dt = DateTime()
         val pushed = dt.minusDays(7).toString("yyyy-MM-dd")
         val created = dt.minusMonths(1).toString("yyyy-MM-dd")
-        return gitService.searchRepo(
-                 search = "pushed:>$pushed created:>$created",
-                 page = page )
+        return gitService.searchRepo(search = "pushed:>$pushed created:>$created", page = page)
                 .map { it.items }
-                .doOnNext {
-
-                }
     }
 
     override fun getPopular(page: Int): Flowable<List<Repo>> {
@@ -46,6 +41,10 @@ class RepoRepository @Inject constructor(
         val pushed = dt.minusMonths(1).toString("yyyy-MM-dd")
         return gitService.searchRepo(search = "pushed:>$pushed", page = page)
                 .map { it.items }
+    }
+
+    fun saveRepo(repos: List<Repo>) {
+        databaseService.saveRepo(repos)
     }
 
 }

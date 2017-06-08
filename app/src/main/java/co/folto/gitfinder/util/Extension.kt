@@ -22,6 +22,9 @@ import android.widget.Toast
 import co.folto.gitfinder.R
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.joda.time.DateTime
 import java.util.*
 
@@ -82,6 +85,10 @@ fun Context.openChromeTabs(url: String) {
 
 fun String.formatDate(format: String)
     = DateTime(this).toString(format)
+
+fun <T> Flowable<T>.start()
+    = this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
 @TargetApi(Build.VERSION_CODES.M)
 fun AppCompatActivity.requestPermissionsSafely(permissions: Array<String>, requestCode: Int) {

@@ -25,7 +25,7 @@ class PopularPresenter(
 
     override fun subscribe() = loadRepos()
 
-    override fun unsubscribe() = composite.clear()
+    override fun unsubscribe() = composite.dispose()
 
     override fun loadRepos() {
         view.setLoading(true)

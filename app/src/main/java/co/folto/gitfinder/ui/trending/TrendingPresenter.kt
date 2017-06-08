@@ -2,11 +2,10 @@ package co.folto.gitfinder.ui.trending
 
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
+import co.folto.gitfinder.util.start
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 /**
@@ -25,9 +24,7 @@ class TrendingPresenter(
 
     override fun subscribe() = loadRepos()
 
-    override fun unsubscribe() {
-        composite.clear()
-    }
+    override fun unsubscribe() = composite.dispose()
 
     override fun loadRepos() {
         view.setLoading(true)
@@ -35,6 +32,7 @@ class TrendingPresenter(
         val request = getRepo(1)
             .subscribeBy (
                 onNext = {
+                    //repoRepository.saveRepo(it)
                     if(it.isEmpty())
                         view.showNoRepo(false)
                     else
@@ -67,7 +65,6 @@ class TrendingPresenter(
 
     fun getRepo(page: Int): Flowable<List<Repo>>
             = repoRepository.getTrending(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .start()
 
 }

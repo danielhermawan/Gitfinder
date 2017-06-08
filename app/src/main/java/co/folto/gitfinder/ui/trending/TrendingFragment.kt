@@ -12,7 +12,11 @@ import co.folto.gitfinder.R
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.ui.adapter.RepoAdapter
-import co.folto.gitfinder.util.*
+import co.folto.gitfinder.util.adapter.DividerItemDecoration
+import co.folto.gitfinder.util.adapter.EndlessRecyclerViewScrollListener
+import co.folto.gitfinder.util.openChromeTabs
+import co.folto.gitfinder.util.setDefaultColors
+import co.folto.gitfinder.util.showSnack
 import kotlinx.android.synthetic.main.fragment_trending.*
 import javax.inject.Inject
 
@@ -73,16 +77,6 @@ class TrendingFragment : Fragment(), TrendingContract.View {
         presenter.unsubscribe()
         super.onDestroyView()
     }
-
-    /*override fun onStart() {
-        super.onStart()
-        presenter.subscribe();
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-    }*/
 
     override fun setLoading(active: Boolean) {
         swipeContainer.isRefreshing = active

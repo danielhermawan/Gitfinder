@@ -1,4 +1,4 @@
-package co.folto.gitfinder.util
+package co.folto.gitfinder.util.adapter
 
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
