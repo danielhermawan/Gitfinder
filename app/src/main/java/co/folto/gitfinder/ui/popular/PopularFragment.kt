@@ -11,9 +11,9 @@ import co.folto.gitfinder.R
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.ui.adapter.RepoAdapter
+import co.folto.gitfinder.ui.repodetail.DetailActivity
 import co.folto.gitfinder.util.adapter.DividerItemDecoration
 import co.folto.gitfinder.util.adapter.EndlessRecyclerViewScrollListener
-import co.folto.gitfinder.util.openChromeTabs
 import co.folto.gitfinder.util.setDefaultColors
 import co.folto.gitfinder.util.showSnack
 import kotlinx.android.synthetic.main.fragment_trending.*
@@ -28,7 +28,7 @@ class PopularFragment: Fragment(), PopularContract.View {
     @Inject
     lateinit var repoRepository: RepoRepository
     lateinit private var presenter: PopularContract.Presenter
-    private val repoAdapter = RepoAdapter( { activity.openChromeTabs(it.htmlUrl) } )
+    private val repoAdapter = RepoAdapter( { activity.startActivity(DetailActivity.newIntent(activity, it.fullName)) } )
 
     companion object {
         fun newInstance() = PopularFragment()
@@ -99,6 +99,4 @@ class PopularFragment: Fragment(), PopularContract.View {
             noTasks.text = resources.getString(R.string.main_no_repos_found)
         noRepos.visibility = android.view.View.VISIBLE
     }
-
-            /*= activity.startActivity(DetailActivity.newIntent(activity, id))*/
 }

@@ -17,4 +17,5 @@
     <string name="browse">Browse</string>
     <string name="language">Language</string>
     <string name="favorite">Favorite</string>
+    <string name="open_in_browse">Open in browser</string>
 </resources>
