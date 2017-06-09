@@ -20,6 +20,7 @@ class GitfinderApplication: Application() {
     //todo: Make base fragment and stuff
     //todo: Fix and made it like reddit
     //todo: Glide and okhttp
+    //todo: add aniamtion main transition
     //todo: search, filter, fix detail, bottom navigation, search by language or topic
     companion object {
         @JvmStatic lateinit var dataComponent: DataComponent
