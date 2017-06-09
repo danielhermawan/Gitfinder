@@ -34,6 +34,9 @@ class RepoRepository @Inject constructor(
         val created = dt.minusMonths(1).toString("yyyy-MM-dd")
         return gitService.searchRepo(search = "pushed:>$pushed created:>$created", page = page)
                 .map { it.items }
+                .doOnNext {
+                    databaseService.saveRepo(it)
+                }
     }
 
     override fun getPopular(page: Int): Flowable<List<Repo>> {
@@ -41,10 +44,10 @@ class RepoRepository @Inject constructor(
         val pushed = dt.minusMonths(1).toString("yyyy-MM-dd")
         return gitService.searchRepo(search = "pushed:>$pushed", page = page)
                 .map { it.items }
+                .doOnNext {
+                    databaseService.saveRepo(it)
+                }
     }
 
-    fun saveRepo(repos: List<Repo>) {
-        databaseService.saveRepo(repos)
-    }
 
 }

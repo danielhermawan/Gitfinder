@@ -13,4 +13,5 @@
     <string name="icon_image_warning">Icon Image Warning</string>
     <string name="detail_error_message">We have some trouble getting to github</string>
     <string name="search">Search</string>
+    <string name="bluetooth">bluetooth</string>
 </resources>

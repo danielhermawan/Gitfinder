@@ -2,11 +2,10 @@ package co.folto.gitfinder.ui.popular
 
 import co.folto.gitfinder.data.RepoRepository
 import co.folto.gitfinder.data.model.Repo
+import co.folto.gitfinder.util.start
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 
 /**
@@ -37,13 +36,13 @@ class PopularPresenter(
                         view.showNoRepo(false)
                     else
                         view.showRepos(it)
+                    view.setLoading(false)
                 },
                 onError = {
                     view.showError("Unable to fetch data from github")
                     view.showNoRepo(true)
                     view.setLoading(false)
-                },
-                onComplete = { view.setLoading(false) }
+                }
             )
         composite.add(request)
     }
@@ -64,6 +63,5 @@ class PopularPresenter(
 
     fun getRepo(page: Int): Flowable<List<Repo>>
             = repoRepository.getPopular(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .start()
 }

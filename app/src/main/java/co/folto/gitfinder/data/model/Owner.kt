@@ -1,16 +1,16 @@
 package co.folto.gitfinder.data.model
 
-import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 
 /**
  * Created by Daniel on 5/22/2017 for GitFInder project.
  */
-open class Owner(
-        @PrimaryKey var id: Long = 0,
-        var login: String = "",
-        var type: String = "",
-        @SerializedName("avatar_url") var avatarUrl: String = "",
-        @SerializedName("gravatar_id") var gravatarId: String = ""
-): RealmObject()
+@Entity
+class Owner {
+    var login: String = ""
+    var type: String = ""
+    @PrimaryKey var id: Long = 0
+    var avatarUrl: String = ""
+    var gravatarId: String = ""
+}

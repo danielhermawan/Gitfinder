@@ -40,7 +40,7 @@ class RepoDelegateAdapter(val itemClick: (Repo) -> Unit): ViewTypeDelegateAdapte
                 textForkCount.text = repo.forks.toString()
                 textWatchCount.text = repo.watchers.toString()
                 textUpdated.text = repo.createdAt.formatDate("MM/yyyy")
-                if(repo.private)
+                if(repo.privated)
                     imgPrivate.setImageDrawable(resources.obtainDrawable(R.drawable.ic_lock_outline_black_24dp, context))
                 else
                     imgPrivate.setImageDrawable(resources.obtainDrawable(R.drawable.ic_lock_open_black_24dp, context))

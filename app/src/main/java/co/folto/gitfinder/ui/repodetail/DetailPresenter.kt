@@ -1,10 +1,9 @@
 package co.folto.gitfinder.ui.repodetail
 
 import co.folto.gitfinder.data.RepoRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
+import co.folto.gitfinder.util.start
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Daniel on 6/5/2017 for GitFInder project.
@@ -29,8 +28,7 @@ class DetailPresenter (
         view.setLoading(true)
         val(owner, name) = repoId.split('/')
         val request = repoRepository.getRepo(owner, name)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .start()
                 .subscribeBy (
                     onNext = {
                         view.showRepo(it)

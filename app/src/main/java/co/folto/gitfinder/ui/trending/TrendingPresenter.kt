@@ -32,19 +32,18 @@ class TrendingPresenter(
         val request = getRepo(1)
             .subscribeBy (
                 onNext = {
-                    //repoRepository.saveRepo(it)
                     if(it.isEmpty())
                         view.showNoRepo(false)
                     else
                         view.showRepos(it)
+                    view.setLoading(false)
                 },
                 onError = {
                     Timber.e(it)
                     view.showError("Unable to fetch data from github")
                     view.showNoRepo(true)
                     view.setLoading(false)
-                },
-                onComplete = { view.setLoading(false) }
+                }
             )
         composite.add(request)
     }

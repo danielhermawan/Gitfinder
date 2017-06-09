@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -15,6 +14,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -23,6 +28,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 kapt {
@@ -45,7 +52,7 @@ dependencies {
     compile "joda-time:joda-time:$rootProject.jodaTime"
 
     compile "android.arch.persistence.room:runtime:$rootProject.androidComponent"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.androidComponent"
+    kapt "android.arch.persistence.room:compiler:$rootProject.androidComponent"
     //testCompile "android.arch.persistence.room:testing:$rootProject.androidComponent"
     compile "android.arch.persistence.room:rxjava2:$rootProject.androidComponent"
 

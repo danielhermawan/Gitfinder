@@ -2,14 +2,13 @@ package co.folto.gitfinder.injection.module
 
 import android.app.Application
 import co.folto.gitfinder.BuildConfig
-import co.folto.gitfinder.data.model.serializer.OwnerSerializer
-import co.folto.gitfinder.data.model.serializer.RepoSerializer
 import co.folto.gitfinder.data.remote.GitService
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.google.gson.*
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import io.realm.RealmObject
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,15 +38,6 @@ class RemoteDataModule {
         return GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setExclusionStrategies(object: ExclusionStrategy {
-                    override fun shouldSkipClass(clazz: Class<*>?): Boolean = false
-
-                    override fun shouldSkipField(f: FieldAttributes?): Boolean =
-                            f?.getDeclaringClass() == RealmObject::class.java
-
-                })
-                .registerTypeAdapter(Class.forName("io.realm.OwnerRealmProxy"), OwnerSerializer())
-                .registerTypeAdapter(Class.forName("io.realm.RepoRealmProxy"), RepoSerializer())
                 .create()
     }
 
