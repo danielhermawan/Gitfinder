@@ -1,6 +1,7 @@
 package co.folto.gitfinder.ui.repodetail
 
 import co.folto.gitfinder.data.RepoRepository
+import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.util.start
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -40,5 +41,11 @@ class DetailPresenter (
                     onComplete = { view.setLoading(false) }
                 )
         composite.add(request)
+    }
+
+    override fun addFavorite(repo: Repo) {
+        repoRepository.addFavorite(repo).start().subscribe {
+            view.showMessage("Repo successfully added to your favorite")
+        }
     }
 }

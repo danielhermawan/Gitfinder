@@ -10,10 +10,12 @@ import co.folto.gitfinder.ui.base.BaseView
 interface DetailContract {
     interface Presenter: BasePresenter {
         fun loadRepo()
+        fun addFavorite(repo: Repo)
     }
 
     interface View: BaseView<Presenter> {
         fun showRepo(repo: Repo)
+        fun showMessage(message: String)
         fun showError(message: String)
         fun setLoading(active: Boolean)
     }

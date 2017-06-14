@@ -22,6 +22,7 @@ import android.widget.Toast
 import co.folto.gitfinder.R
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -88,6 +89,10 @@ fun String.formatDate(format: String)
 
 fun <T> Flowable<T>.start()
     = this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+
+fun Completable.start()
+        = this.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 
 @TargetApi(Build.VERSION_CODES.M)

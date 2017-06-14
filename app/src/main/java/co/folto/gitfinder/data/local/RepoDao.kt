@@ -13,6 +13,12 @@ interface RepoDao {
     @Query("SELECT * FROM repo")
     fun getAll(): Flowable<List<Repo>>
 
+    @Query("SELECT * FROM repo WHERE fullName = :arg0")
+    fun getByName(fullName: String): Flowable<Repo>
+
+    @Query("SELECT * FROM repo WHERE favorite = 1")
+    fun getFavorite(): Flowable<List<Repo>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg repos: Repo)
 

@@ -69,6 +69,11 @@ class DetailFragment: Fragment(), DetailContract.View {
                     activity.openChromeTabs(it.htmlUrl)
                 }
             }
+            R.id.item_add_favorite -> {
+                repo?.let {
+                    presenter.addFavorite(it)
+                }
+            }
         }
         return true
     }
@@ -88,6 +93,10 @@ class DetailFragment: Fragment(), DetailContract.View {
         activity.title = repo.fullName
         textFullname.text = repo.fullName
         this.repo = repo
+    }
+
+    override fun showMessage(message: String) {
+        view?.showSnack(message)
     }
 
     override fun showError(message: String) {

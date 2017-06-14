@@ -5,6 +5,7 @@ import co.folto.gitfinder.data.local.DatabaseService
 import co.folto.gitfinder.data.local.PreferenceHelper
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.data.remote.GitService
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import org.joda.time.DateTime
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class RepoRepository @Inject constructor(
     }
 
     override fun getRepo(owner: String, repo: String): Flowable<Repo> {
-        return gitService.getRepo(owner, repo)
+        return databaseService.getRepo(owner, repo)
     }
 
     override fun getTrending(page: Int): Flowable<List<Repo>> {
@@ -49,5 +50,13 @@ class RepoRepository @Inject constructor(
                 }
     }
 
+    override fun addFavorite(repo: Repo): Completable {
+        repo.favorite = 1
+        return databaseService.saveRepo(repo)
+    }
+
+    override fun getFavorites(): Flowable<List<Repo>> {
+        return databaseService.getFavorite()
+    }
 
 }

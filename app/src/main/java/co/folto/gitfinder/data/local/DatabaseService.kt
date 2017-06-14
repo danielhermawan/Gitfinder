@@ -17,7 +17,22 @@ class DatabaseService @Inject constructor(private val db: AppDatabase){
         return Completable.complete()
     }
 
-    fun getRepo(): Flowable<List<Repo>> {
+    fun saveRepo(repo: Repo): Completable {
+        return Completable.create {
+            db.repoDao().insertAll(repo)
+            it.onComplete()
+        }
+    }
+
+    fun getRepos(): Flowable<List<Repo>> {
         return db.repoDao().getAll()
+    }
+
+    fun getRepo(owner: String,repo: String): Flowable<Repo> {
+        return db.repoDao().getByName("$owner/$repo")
+    }
+
+    fun getFavorite(): Flowable<List<Repo>> {
+        return db.repoDao().getFavorite()
     }
 }
