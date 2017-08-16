@@ -1,9 +1,9 @@
 # Gitfinder
----
+
 Android application for browsing trending github repository with kotlin language using MVP architecture
 
 # Libraries
----
+
 The libraries and tools used include:
 * [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [Retrofit](http://square.github.io/retrofit/) and [OkHttp](https://github.com/square/okhttp)
