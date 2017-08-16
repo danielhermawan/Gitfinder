@@ -12,6 +12,6 @@ The libraries and tools used include:
 * [Glide](https://github.com/bumptech/glide)
 * [EventBus](https://github.com/greenrobot/EventBus) event bus
 * [Stetho](http://facebook.github.io/stetho/)
-* [Room](https://developer.android.com/topic/libraries/architecture/room.html) Android component persisteny library alpha
+* [Room](https://developer.android.com/topic/libraries/architecture/room.html) Android component persistent library alpha
 * Support library
 * RecyclerViews and CardViews
