@@ -46,6 +46,7 @@ class TrendingPresenter(
                 }
             )
         composite.add(request)
+        //composite.add(repoRepository.clearFavorite().start().subscribe())
     }
 
     override fun loadMoreRepos(page: Int) {

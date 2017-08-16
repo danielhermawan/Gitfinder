@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:name=".GitfinderApplication"
@@ -24,11 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.repodetail.DetailActivity"
-                  android:parentActivityName=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.repodetail.DetailActivity"
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.main.MainActivity" />
+                android:value=".ui.main.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".TestingActivity"
+            android:label="@string/title_activity_testing"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

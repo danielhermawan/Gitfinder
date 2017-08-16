@@ -10,7 +10,8 @@ import co.folto.gitfinder.ui.base.BaseView
 interface DetailContract {
     interface Presenter: BasePresenter {
         fun loadRepo()
-        fun addFavorite(repo: Repo)
+        fun openChromeTab()
+        fun toogleFavorite()
     }
 
     interface View: BaseView<Presenter> {
@@ -18,5 +19,7 @@ interface DetailContract {
         fun showMessage(message: String)
         fun showError(message: String)
         fun setLoading(active: Boolean)
+        fun activeFavorite(active: Boolean)
+        fun openChromeTab(repo: Repo)
     }
 }

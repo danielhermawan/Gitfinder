@@ -5,7 +5,6 @@ import co.folto.gitfinder.injection.component.DaggerDataComponent
 import co.folto.gitfinder.injection.component.DataComponent
 import co.folto.gitfinder.injection.module.ApplicationModule
 import com.facebook.stetho.Stetho
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import timber.log.Timber
 
 /**
@@ -30,11 +29,7 @@ class GitfinderApplication: Application() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-            Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                    .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                    .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                    .build());
+            Stetho.initializeWithDefaults(this)
         }
         dataComponent = DaggerDataComponent.builder()
                 .applicationModule(ApplicationModule(this))

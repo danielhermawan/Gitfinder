@@ -31,7 +31,6 @@ class Repo: ViewType{
     var forks: Int = 0
     var openIssues: Int = 0
     var language: String? = ""
-    var favorite: Int? = 0
 
     override fun getViewType(): Int = AdapterConstant.REPO
 }

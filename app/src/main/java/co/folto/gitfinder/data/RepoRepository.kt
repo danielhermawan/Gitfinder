@@ -3,6 +3,7 @@ package co.folto.gitfinder.data
 import co.folto.gitfinder.data.contract.RepoContract
 import co.folto.gitfinder.data.local.DatabaseService
 import co.folto.gitfinder.data.local.PreferenceHelper
+import co.folto.gitfinder.data.model.FavoriteRepo
 import co.folto.gitfinder.data.model.Repo
 import co.folto.gitfinder.data.remote.GitService
 import io.reactivex.Completable
@@ -21,42 +22,42 @@ class RepoRepository @Inject constructor(
         private val preferenceHelper: PreferenceHelper
 ): RepoContract{
 
-    override fun getRepos(): Flowable<List<Repo>> {
-        return gitService.listRepos()
-    }
+    override fun getRepos(): Flowable<List<Repo>> = gitService.listRepos()
 
-    override fun getRepo(owner: String, repo: String): Flowable<Repo> {
-        return databaseService.getRepo(owner, repo)
-    }
+    override fun getRepo(owner: String, repo: String): Flowable<Repo> =
+        databaseService.getRepo(owner, repo)
 
     override fun getTrending(page: Int): Flowable<List<Repo>> {
         val dt = DateTime()
         val pushed = dt.minusDays(7).toString("yyyy-MM-dd")
         val created = dt.minusMonths(1).toString("yyyy-MM-dd")
         return gitService.searchRepo(search = "pushed:>$pushed created:>$created", page = page)
-                .map { it.items }
-                .doOnNext {
-                    databaseService.saveRepo(it)
-                }
+            .map { it.items }
+            .doOnNext {
+                databaseService.saveRepo(it)
+            }
     }
 
     override fun getPopular(page: Int): Flowable<List<Repo>> {
         val dt = DateTime()
         val pushed = dt.minusMonths(1).toString("yyyy-MM-dd")
         return gitService.searchRepo(search = "pushed:>$pushed", page = page)
-                .map { it.items }
-                .doOnNext {
-                    databaseService.saveRepo(it)
-                }
+            .map { it.items }
+            .doOnNext {
+                databaseService.saveRepo(it)
+            }
     }
 
-    override fun addFavorite(repo: Repo): Completable {
-        repo.favorite = 1
-        return databaseService.saveRepo(repo)
-    }
+    override fun addFavorite(favoriteRepo: FavoriteRepo): Completable =
+        databaseService.addFavoriteRepo(favoriteRepo)
 
-    override fun getFavorites(): Flowable<List<Repo>> {
-        return databaseService.getFavorite()
-    }
+    override fun getFavorites(): Flowable<List<FavoriteRepo>> = databaseService.getFavoriteRepos()
 
+    override fun removeFavorites(owner: String,repo: String): Completable
+        = databaseService.revomeFavorite(owner, repo)
+
+    override fun isFavorite(owner: String, repo: String): Flowable<Boolean>
+        = databaseService.isFavorite(owner, repo)
+
+    override fun clearFavorite(): Completable = databaseService.clearFavoriteRepo()
 }
