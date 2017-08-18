@@ -48,11 +48,11 @@ class DatabaseService @Inject constructor(private val db: AppDatabase){
 
     fun isFavorite(owner: String,repo: String): Flowable<Boolean> {
         return db.favoriteRepoDao().getCount("$owner/$repo")
-            .flatMap {
+            .map {
                 var valid = false
                 if(it != 0)
                     valid = true
-                Flowable.just(valid)
+                valid
             }
     }
 

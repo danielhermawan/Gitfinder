@@ -20,4 +20,5 @@
     <string name="open_in_browse">Open in browser</string>
     <string name="add_to_favorite">Add to favorite</string>
     <string name="title_activity_testing">TestingActivity</string>
+    <string name="main.no_favorite_found">No favorite repo added yet</string>
 </resources>

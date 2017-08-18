@@ -9,6 +9,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import co.folto.gitfinder.R
+import co.folto.gitfinder.ui.favorite.FavoriteFragment
+import co.folto.gitfinder.ui.language.LanguageFragment
 import co.folto.gitfinder.ui.popular.PopularFragment
 import co.folto.gitfinder.ui.trending.TrendingFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,9 +29,11 @@ class MainActivity: AppCompatActivity(){
                 }
                 R.id.action_language -> {
                     toogleBrowse(false)
+                    setActiveContent(LanguageFragment.newInstance())
                 }
                 R.id.action_favorite -> {
                     toogleBrowse(false)
+                    setActiveContent(FavoriteFragment.newInstance())
                 }
             }
             true
@@ -72,6 +76,13 @@ class MainActivity: AppCompatActivity(){
             appbar.setExpanded(true, true)
             toolbar.menu.findItem(R.id.item_search).setVisible(false)
         }
+    }
+
+    private fun setActiveContent(fragment: Fragment) {
+        val fm = supportFragmentManager
+        fm.beginTransaction()
+                .replace(R.id.contentFrame, fragment)
+                .commit()
     }
 
     class ViewPageAdapter(manager: FragmentManager): FragmentPagerAdapter(manager){
